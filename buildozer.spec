@@ -1,10 +1,10 @@
 [app]
-title = Voladopillo Poncho
+title = Volado pillo Poncho
 package.name = voladopilloponcho
-package.domain = org.test
+package.domain = com.lia.voladopillo
 source.dir =.
 source.include_exts = py,png,jpg,jpeg
-version = 0.1
+version = 1.0
 requirements = python3,kivy,Pillow
 orientation = portrait
 fullscreen = 0
