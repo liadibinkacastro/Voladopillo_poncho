@@ -19,6 +19,7 @@ android.ndk = 25b
 android.accept_sdk_license_agreements = True
 android.build_tools_version = 33.0.2
 p4a.bootstrap = sdl2
+android.archs = arm64-v8a
 
 [buildozer]
 log_level = 2
