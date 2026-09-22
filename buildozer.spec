@@ -16,6 +16,8 @@ android.sdk = 33
 android.build_tools_version = 33.0.2
 android.ndk = 25b
 android.accept_sdk_license_agreement = True
+android.sdk_dir = /usr/local/lib/android/sdk
+p4a.sdk_dir = /usr/local/lib/android/sdk
 
 [buildozer]
 log_level = 2
