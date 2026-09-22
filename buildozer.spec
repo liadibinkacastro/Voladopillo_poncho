@@ -6,7 +6,7 @@ source.dir =.
 source.include_exts = py,png,jpg,jpeg
 version = 1.0
 icon.filename = %(source.dir)s/icono.png
-requirements = python3,kivy
+requirements = python3,kivy==2.2.0
 orientation = portrait
 fullscreen = 0
 android.permissions = INTERNET,CAMERA,READ_EXTERNAL_STORAGE,WRITE_EXTERNAL_STORAGE
