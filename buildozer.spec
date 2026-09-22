@@ -1,18 +1,19 @@
 [app]
-title = Mi App
-package.name = miapp
+title = Voladopillo Poncho
+package.name = voladopilloponcho
 package.domain = org.test
-
 source.dir =.
 source.include_exts = py,png,jpg,jpeg
-source.include_patterns = aguila.png,sello.png
-
 version = 0.1
-requirements = python3,kivy
+requirements = python3,kivy,Pillow
 orientation = portrait
+fullscreen = 0
+android.permissions = INTERNET
+android.api = 33
+android.minapi = 21
+android.ndk = 25b
+android.accept_sdk_license_agreement = True
 
 [buildozer]
 log_level = 2
-
-# (android)
-# p4a.url = https://github.com/kivy/python-for-android
+warn_on_root = 1
