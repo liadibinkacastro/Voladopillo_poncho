@@ -12,18 +12,29 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.10'
-      - name: Force fix spec and build
+      - name: Build VoladoPillo sin el 37
         run: |
-          pip install "Cython==0.29.36" buildozer
-          sudo apt update && sudo apt install -y zip unzip libssl-dev libffi-dev python3-dev
-          # Aquí forzamos el 33.0.2 aunque tu spec esté comentado
-          sed -i 's/^#* *android.build_tools_version.*/android.build_tools_version = 33.0.2/' buildozer.spec
-          sed -i 's/^#* *android.accept_sdk_license_agreements.*/android.accept_sdk_license_agreements = True/' buildozer.spec
-          # Si no existían, las agregamos
-          grep -q "build_tools_version" buildozer.spec || echo "android.build_tools_version = 33.0.2" >> buildozer.spec
-          grep -q "accept_sdk_license" buildozer.spec || echo "android.accept_sdk_license_agreements = True" >> buildozer.spec
-          cat buildozer.spec | grep -A2 -B2 "build_tools"
-          rm -rf ~/.buildozer bin.buildozer
+          pip install --upgrade pip
+          pip install "Cython==0.29.36" https://github.com/kivy/buildozer/archive/master.zip https://github.com/kivy/python-for-android/archive/master.zip
+          sudo apt update && sudo apt install -y zip unzip wget
+          # 1. Pre-instalamos el SDK con el 33.0.2 y aceptamos licencias
+          export ANDROIDSDK="$HOME/.buildozer/android/platform/android-sdk"
+          export ANDROID_HOME="$ANDROIDSDK"
+          mkdir -p $ANDROIDSDK/cmdline-tools
+          cd $ANDROIDSDK/cmdline-tools
+          wget -q https://dl.google.com/android/repository/commandlinetools-linux-11076708_latest.zip
+          unzip -q commandlinetools-linux-11076708_latest.zip
+          mkdir -p latest
+          mv cmdline-tools/* latest/ || true
+          mkdir -p $ANDROIDSDK/licenses
+          echo "8933bad161af4178b1185d1a37fbf41ea5269c55" > $ANDROIDSDK/licenses/android-sdk-license
+          echo "d56f5187479451eabf01fb78af6dfcb131a6481e" >> $ANDROIDSDK/licenses/android-sdk-license
+          echo "24333f8a63b6825ea9c5514f83c1059b8ea731e" >> $ANDROIDSDK/licenses/android-sdk-license
+          yes | $ANDROIDSDK/cmdline-tools/latest/bin/sdkmanager --licenses > /dev/null || true
+          $ANDROIDSDK/cmdline-tools/latest/bin/sdkmanager "build-tools;33.0.2" "platforms;android-33" "platform-tools"
+          # 2. Ahora si corremos buildozer
+          cd $GITHUB_WORKSPACE
+          rm -rf bin
           buildozer android debug
       - uses: actions/upload-artifact@v4
         with:
