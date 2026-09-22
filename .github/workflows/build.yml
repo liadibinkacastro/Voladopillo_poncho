@@ -1,15 +1,20 @@
 name: APK
-on: [push]
+on:
+  push:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: true
     steps:
       - uses: actions/checkout@v4
-      - uses: digreatbrian/buildozer-action@v2
+      - name: Build APK
+        uses: digreatbrian/buildozer-action@v2
         with:
-          python-version: python3.10
+          python-version: "3.10"
           buildozer-cmd: buildozer android debug
-      - uses: actions/upload-artifact@v4
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
         with:
           name: APK-Voladopillo
           path: bin/*.apk
