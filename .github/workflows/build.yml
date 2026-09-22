@@ -4,15 +4,12 @@ jobs:
   build:
     runs-on: ubuntu-latest
     container:
-      image: kivy/buildozer:stable
+      image: kivy/buildozer
+      options: --user root
     steps:
       - uses: actions/checkout@v4
-
-      - name: Build APK
-        run: buildozer android debug
-
-      - name: Upload APK
-        uses: actions/upload-artifact@v4
+      - run: buildozer android debug
+      - uses: actions/upload-artifact@v4
         with:
           name: Voladopillo-APK
           path: bin/*.apk
